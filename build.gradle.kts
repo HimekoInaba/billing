@@ -25,13 +25,9 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-    // lombok
-    compileOnly("org.projectlombok:lombok:1.18.12")
-    annotationProcessor("org.projectlombok:lombok:1.18.12")
-    testCompileOnly("org.projectlombok:lombok:1.18.12")
-    testAnnotationProcessor("org.projectlombok:lombok:1.18.12")
+    implementation("postgresql:postgresql:9.1-901-1.jdbc4")
 
-    testImplementation("org.mockito':mockito-core:3.3.3")
+    testImplementation("org.mockito:mockito-core:3.3.3")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
