@@ -13,8 +13,10 @@ services:
     restart: always
     container_name: "billing-postgres"
     environment:
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=billing
     ports:
       - 5432:5432
     volumes:
-      - .docker-data/db/initdb.sh:/docker-entrypoint-initdb.d/initdb.sh
+      - "./postgres-data:/var/lib/postgresql/data"

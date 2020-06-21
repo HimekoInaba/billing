@@ -1,16 +1,22 @@
 package me.billing.service.wallet
 
 import me.billing.api.dto.WalletBalanceDto
+import me.billing.dao.OperationRepository
 import me.billing.dao.WalletRepository
 import me.billing.exception.WalletException
+import me.billing.model.Operation
 import me.billing.model.Wallet
-import me.billing.service.OperationService
+import me.billing.service.BillingService
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class WalletOperationService(val walletRepository: WalletRepository): OperationService {
+class WalletService(
+        val walletRepository: WalletRepository,
+        val operationRepository: OperationRepository,
+        val walletValidator: WalletValidator
+): BillingService {
     @Transactional
     override fun create(wallet: Wallet) {
         val existing: Wallet? = walletRepository.findByName(wallet.name)
@@ -25,7 +31,18 @@ class WalletOperationService(val walletRepository: WalletRepository): OperationS
         walletRepository.save(wallet)
     }
 
-    override fun changeBalance(walletBalanceDto: WalletBalanceDto) {
+    fun getWalletWithLock(id: Long): Wallet {
+        val wallet: Wallet? = walletRepository.findOneByIdWithLock(id)
+        return walletValidator.validate(wallet, id)
+    }
+
+    override fun changeBalance(dto: WalletBalanceDto) {
+        val existing: Operation? = operationRepository.findByIdempotenceKey(dto.idempotenceKey)
+        if (existing != null) {
+            // operation already exists
+            return
+        }
+
 
     }
 }

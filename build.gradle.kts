@@ -28,7 +28,9 @@ dependencies {
     implementation("postgresql:postgresql:9.1-901-1.jdbc4")
 
     testImplementation("org.mockito:mockito-core:3.3.3")
-
+    testImplementation("org.testcontainers:postgresql:1.14.3")
+    testImplementation("org.testcontainers:testcontainers:1.14.3")
+    testImplementation("org.testcontainers:junit-jupiter:1.14.3")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }

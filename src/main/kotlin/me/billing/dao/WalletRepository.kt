@@ -13,7 +13,7 @@ interface WalletRepository : CrudRepository<Wallet, Long> {
     fun findByName(name: String): Wallet?
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    fun findByIdWithLock(id: Long): Wallet?
+    fun findOneByIdWithLock(id: Long): Wallet
 
     fun save(wallet: Wallet): Wallet
 
